@@ -24,4 +24,4 @@
  * Handshake information
  */
 
-#define HANDSHAKE "e0ed3f5e014483814fedd8f16317e51bab43cc5ef58fec6b9f98441087daa4ccc604419aedd7f1d496c674d076d10f53b0d97df7323336b58c88ac051cd39d74"
+#define HANDSHAKE "<please contact the author for a proper handshake key>"

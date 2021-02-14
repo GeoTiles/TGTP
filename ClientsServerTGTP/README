@@ -6,7 +6,7 @@ $> make
 
 It requires the BOOST library (property_tree)
 
-*) No instalation required
+*) To be able to comunicate with the server a sha1 key is needed (file handshake.hpp), please contact the author
 
 *) Use (the "hilbert.mat.uc.pt" is the TGTP server) 
 
