@@ -1,5 +1,5 @@
 /* 
- * Copyright 2017, Pedro Quaresma, pedro@mat.uc.pt
+ * Copyright 2017, 2021, Pedro Quaresma, pedro@mat.uc.pt
  *
  * Client WGL (standalone or to be called from a program)
  *
