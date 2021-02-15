@@ -1,7 +1,7 @@
 /* 
  * Copyright 2017, Pedro Quaresma, pedro@mat.uc.pt
  *
- * Client WGL (to be called by a WGL's Web-page)
+ * Client WGL (standalone or to be called from a program)
  *
  * --> reads a string (query) from the command line
  * Send handshake information and the query to the server 
@@ -9,15 +9,15 @@
  * <-- { "Query":"<query>", "Filters":"<filters>" } to the server
  * Gets the answer from the server
  * --> { "<teoId1>":
- *       { "Name":"<name>","Description":"<description>","Code":"<code>"}
+ *       { "Name":"<name>","Description":"<description>","Code":"<code>"},
  *       "<teoId2>
- *       { "Name":"<name>","Description":"<description>","Code":"<code>"}
+ *       { "Name":"<name>","Description":"<description>","Code":"<code>"},
  *       ...
  *       "<teoIdN>
  *       { "Name":"<name>","Description":"<description>","Code":"<code>"}
  *     }
- * <-- send the information back to the caller XXX falta saber como ???
- *
+ * <-- send the information back to the standard output (standalone)
+ *     or to the caller, it is the caller responsability to deal with it
  */ 
 #include <stdio.h>
 #include <stdlib.h>
