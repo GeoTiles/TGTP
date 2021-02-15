@@ -1,34 +1,13 @@
 /* 
- * Copyright 2017, Pedro Quaresma, pedro@mat.uc.pt 
+ * Copyright 2017, Pedro Quaresma, pedro@mat.uc.pt
  *
- * Permission is hereby granted, free of charge, to any person
- * obtaining a copy of this software and associated documentation
- * files (the "Software"), to deal in the Software without
- * restriction, including without limitation the rights to use, copy,
- * modify, merge, publish, distribute, sublicense, and/or sell copies
- * of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be
- * included in all copies or substantial portions of the Software.
- * 
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
- * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
- * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
- * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS
- * BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
- * ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
- * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
- *
- * Client (to the TGTP server)
+ * Client WGL (to be called by a WGL's Web-page)
  *
  * --> reads a string (query) from the command line
  * Send handshake information and the query to the server 
  * <-- HANDSHAKE
  * <-- { "Query":"<query>", "Filters":"<filters>" } to the server
  * Gets the answer from the server
- * --> receives the OK from the server and also the size of the answer
  * --> { "<teoId1>":
  *       { "Name":"<name>","Description":"<description>","Code":"<code>"}
  *       "<teoId2>
@@ -37,11 +16,9 @@
  *       "<teoIdN>
  *       { "Name":"<name>","Description":"<description>","Code":"<code>"}
  *     }
- * <-- outputs the answer as received (JSON format)
+ * <-- send the information back to the caller XXX falta saber como ???
  *
- */
-
-// sockets and other C libraries
+ */ 
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -49,13 +26,13 @@
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
-#include <netdb.h>
+#include <netdb.h>    // hostent
 
 // C++ libraries
 #include <string>
 #include <iostream>
 
-// ptree & JSON libraries (from BOOST)
+// ptree & JSON libraries
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/json_parser.hpp>
 
@@ -111,7 +88,10 @@ int main(int argc, char *argv[]) {
     error("ERROR connecting");
   }
 
-  rBuffer = argv[3];
+  /*
+   * Read, from the command line, the string "WHERE" part of a SQL query 
+   */
+  rBuffer = argv[3]; 
   
   
   /*
@@ -126,7 +106,7 @@ int main(int argc, char *argv[]) {
   memset(buffer, '\0', 4);
   n = read(sockfd,buffer,3);
 
-  string strBuffer(buffer);
+  std::string strBuffer(buffer);
   if (strBuffer != "OK") {
     // stops imediatly
     error("The server refused the authentication\n");
@@ -140,7 +120,7 @@ int main(int argc, char *argv[]) {
 
   // Put the elements in a ptree
   pt.put("Query", rBuffer);
-  pt.put("Filters","drawerId=4"); // select GeoGebra constructions
+  pt.put("Filters",""); //AND proverId=2"); // GCLC (area method)
   // convert it to a JSON object
   write_json (jsonBuffer, pt, false);
   
